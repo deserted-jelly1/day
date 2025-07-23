@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Day Progress Bar</title>
+  <style>
+    body {
+      background-color: #111;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      flex-direction: column;
+    }
+
+    .bar-container {
+      width: 80%;
+      background-color: #333;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 30px;
+      box-shadow: 0 0 5px #000;
+    }
+
+    .bar {
+      height: 100%;
+      width: 0%;
+      transition: width 1s linear;
+      background: linear-gradient(to right, yellow, black);
+    }
+
+    .time-label {
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bar-container">
+    <div class="bar" id="progressBar"></div>
+  </div>
+  <div class="time-label" id="timeText"></div>
+
+  <script>
+    function updateProgress() {
+      const now = new Date();
+      const totalMinutes = 24 * 60;
+      const minutesPassed = now.getHours() * 60 + now.getMinutes();
+      const percent = (minutesPassed / totalMinutes) * 100;
+
+      const bar = document.getElementById('progressBar');
+      bar.style.width = percent + '%';
+
+      const timeText = document.getElementById('timeText');
+      timeText.innerText = `Day Progress: ${percent.toFixed(1)}%`;
+    }
+
+    updateProgress();
+    setInterval(updateProgress, 60000); // Update every minute
+  </script>
+
+</body>
+</html>
