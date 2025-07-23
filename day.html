@@ -2,64 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Day Progress Bar</title>
+  <title>Time-Based Day Progress</title>
   <style>
     body {
-      background-color: #111;
+      margin: 0;
+      height: 100vh;
+      background-size: cover;
+      background-position: center;
       font-family: sans-serif;
+      color: white;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      height: 10vh;
-      color: white;
-      flex-direction: column;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 1;
     }
 
     .bar-container {
-      width: 40%;
-      background-color: #333;
+      width: 80%;
+      height: 30px;
+      background-color: rgba(255, 255, 255, 0.2);
       border-radius: 20px;
       overflow: hidden;
-      height: 30px;
-      box-shadow: 0 0 5px #000;
+      position: relative;
+      z-index: 2;
     }
 
     .bar {
       height: 100%;
       width: 0%;
-      transition: width 1s linear;
-      background: linear-gradient(to right, yellow,orange, black);
+      background: linear-gradient(to right, yellow, black);
+      transition: width 1s ease-in-out;
     }
 
     .time-label {
-      margin-top: 10px;
+      margin-top: 15px;
+      font-size: 1.2rem;
+      z-index: 2;
     }
   </style>
 </head>
 <body>
 
+  <div class="overlay"></div>
   <div class="bar-container">
     <div class="bar" id="progressBar"></div>
   </div>
   <div class="time-label" id="timeText"></div>
 
   <script>
-    function updateProgress() {
+    function updateVisuals() {
       const now = new Date();
+      const hour = now.getHours();
+
+      // Change background image based on time
+      let backgroundURL = "";
+
+      if (hour >= 5 && hour < 12) {
+        // Morning
+        backgroundURL = "https://images.unsplash.com/photo-1502082553048-f009c37129b9"; // sunrise
+      } else if (hour >= 12 && hour < 18) {
+        // Afternoon
+        backgroundURL = "https://images.unsplash.com/photo-1506744038136-46273834b3fb"; // bright day
+      } else {
+        // Evening/Night
+        backgroundURL = "https://images.unsplash.com/photo-1504384308090-c894fdcc538d"; // night sky
+      }
+
+      document.body.style.backgroundImage = `url('${backgroundURL}')`;
+
+      // Day progress logic
       const totalMinutes = 24 * 60;
-      const minutesPassed = now.getHours() * 60 + now.getMinutes();
+      const minutesPassed = hour * 60 + now.getMinutes();
       const percent = (minutesPassed / totalMinutes) * 100;
 
-      const bar = document.getElementById('progressBar');
-      bar.style.width = percent + '%';
-
-      const timeText = document.getElementById('timeText');
-      timeText.innerText = `Day Progress: ${percent.toFixed(1)}%`;
+      document.getElementById('progressBar').style.width = percent + '%';
+      document.getElementById('timeText').innerText = `Day Progress: ${percent.toFixed(1)}%`;
     }
 
-    updateProgress();
-    setInterval(updateProgress, 60000); // Update every minute
+    updateVisuals();
+    setInterval(updateVisuals, 60000); // Update every minute
   </script>
 
 </body>
 </html>
+
