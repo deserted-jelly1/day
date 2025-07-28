@@ -1,82 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Countdown to NIT Calicut</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(to bottom, #2e026d, #15162c);
-        color: #ffffff;
-        font-family: 'Segoe UI', sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        height: 100vh;
-        text-align: center;
-      }
+<head>
+  <meta charset="UTF-8">
+  <title>Countdown to NIT</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #ff1a1a; /* Bright Red */
+      color: #ffffff;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+    }
 
-      h1 {
-        font-size: 2.5em;
-        margin-bottom: 0.3em;
-      }
+    h1 {
+      font-size: 2.5em;
+      margin-bottom: 0.2em;
+      font-weight: 600;
+    }
 
-      .countdown {
-        font-size: 1.8em;
-        font-weight: bold;
-      }
+    .days {
+      font-size: 6em;
+      font-weight: 800;
+    }
+  </style>
+</head>
+<body>
 
-      .progress-container {
-        margin-top: 30px;
-        width: 80%;
-        background: #444;
-        border-radius: 20px;
-        overflow: hidden;
-        height: 25px;
-      }
+  <h1>Days left to NIT</h1>
+  <div class="days" id="daysLeft">...</div>
 
-      .progress-bar {
-        height: 100%;
-        background: linear-gradient(to right, #00ffcc, #003366);
-        width: 0%;
-        transition: width 1s ease;
-      }
+  <script>
+    const targetDate = new Date("2025-08-27");
+    const today = new Date();
+    const msDiff = targetDate - today;
+    const daysLeft = Math.max(Math.ceil(msDiff / (1000 * 60 * 60 * 24)), 0);
+    document.getElementById("daysLeft").innerText = daysLeft;
+  </script>
 
-      .caption {
-        margin-top: 10px;
-        font-size: 1em;
-        opacity: 0.7;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>🎓 Countdown to NIT Calicut</h1>
-    <div class="countdown" id="daysLeft">Loading...</div>
-
-    <div class="progress-container">
-      <div class="progress-bar" id="progressBar"></div>
-    </div>
-    <div class="caption" id="progressText">Calculating progress...</div>
-
-    <script>
-      const start = new Date("2025-05-18"); // JEE Advanced date
-      const end = new Date("2025-08-27");   // NIT Calicut start date
-      const today = new Date();
-
-      // Days left
-      const diffInMs = end - today;
-      const daysLeft = Math.max(Math.ceil(diffInMs / (1000 * 60 * 60 * 24)), 0);
-      document.getElementById("daysLeft").innerText = `${daysLeft} days left`;
-
-      // Progress
-      const totalDuration = end - start;
-      const completed = today - start;
-      const percent = Math.min((completed / totalDuration) * 100, 100).toFixed(1);
-
-      document.getElementById("progressBar").style.width = percent + "%";
-      document.getElementById("progressText").innerText = `You've completed ${percent}% of the wait`;
-    </script>
-  </body>
+</body>
 </html>
