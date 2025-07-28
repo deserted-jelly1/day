@@ -41,7 +41,6 @@
     .bar {
       height: 100%;
       width: 0%;
-      background: linear-gradient(to right, yellow, black);
       transition: width 1s ease-in-out;
     }
 
@@ -76,6 +75,15 @@
       }
 
       document.body.style.backgroundImage = `url('${imageUrl}')`;
+      let color = "";
+      if (hour >= 5 && hour < 12) {
+        color = "#FFD700"
+      } else if (hour >= 12 && hour < 18) {
+        color = "#FF8C00"
+      } else {
+        color = "##191970"
+      }
+      document.bar.background = linear-gradient(to right, color, color)
 
       // Progress bar logic
       const totalMinutes = 24 * 60;
