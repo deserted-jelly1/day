@@ -37,10 +37,29 @@
 
   <script>
     const targetDate = new Date("2025-08-27");
-    const today = new Date();
-    const msDiff = targetDate - today;
-    const daysLeft = Math.max(Math.ceil(msDiff / (1000 * 60 * 60 * 24)), 0);
-    document.getElementById("daysLeft").innerText = daysLeft;
+
+    function updateCountdown() {
+      const today = new Date();
+      const msDiff = targetDate - today;
+      const daysLeft = Math.max(Math.ceil(msDiff / (1000 * 60 * 60 * 24)), 0);
+      document.getElementById("daysLeft").innerText = daysLeft;
+    }
+
+    function scheduleMidnightUpdate() {
+      const now = new Date();
+      const tomorrow = new Date();
+      tomorrow.setHours(24, 0, 0, 0); // Set to next midnight
+      const msUntilMidnight = tomorrow - now;
+
+      setTimeout(() => {
+        updateCountdown();
+        scheduleMidnightUpdate(); // Set up next update
+      }, msUntilMidnight);
+    }
+
+    // Initial load
+    updateCountdown();
+    scheduleMidnightUpdate();
   </script>
 
 </body>
