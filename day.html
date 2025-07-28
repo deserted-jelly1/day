@@ -81,9 +81,9 @@
       } else if (hour >= 12 && hour < 18) {
         color = "#FF8C00"
       } else {
-        color = "##191970"
+        color = "#191970"
       }
-      document.bar.background = linear-gradient(to right, color, color)
+      document.querySelector('.bar').style.background = `linear-gradient(to right, ${color}, ${color})`;
 
       // Progress bar logic
       const totalMinutes = 24 * 60;
